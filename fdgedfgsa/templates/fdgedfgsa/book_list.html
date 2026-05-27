@@ -1,0 +1,27 @@
+{% extends "fdgedfgsa/base.html" %}
+
+{% block title %}Books{% endblock %}
+
+{% block content %}
+<h1>Books</h1>
+<p>
+    Show: 
+    <a href="?mode=all">All books</a> |
+    <a href="?mode=available">Books in availability</a>
+</p>
+<ul>
+    {% for book in books %}
+    <li>
+        <a href="{% url 'book-detail' book.pk %}">{{ book.title }}</a> by {{ book.author }}
+        ({{ book.publication_year }}) - 
+        {% if book.is_available %}
+            <span style="color: green;">Available</span>
+        {% else %}
+            <span style="color: red;">Taken by {{ book.current_reader }}</span>
+        {% endif %}
+    </li>
+    {% empty %}
+    <li>No books found.</li>
+    {% endfor %}
+</ul>
+{% endblock %}
